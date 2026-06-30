@@ -58,23 +58,8 @@ def pretokenize(corpus: str) -> Iterator[Match[str]]:
     """
     Pretokenize a corpus.
     """
-    PAT = r"'(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+'"
+    PAT = r"'(?:[sdmt]|ll|ve|re)| ?\p{L}++| ?\p{N}++| ?[^\s\p{L}\p{N}]++|\s++$|\s+(?!\S)|\s"
     return regex.finditer(PAT, corpus)
-
-
-# def find_most_frequent_pair(token_state: dict[tuple[bytes, ...], int], pair_counts: dict[tuple[bytes, bytes], int]) -> tuple[bytes, ...]:
-#     pairs: dict[tuple[bytes, ...], int] = {}
-#     for word, count in token_state.items():
-#         for i in range(len(word) - 1):
-#             pair = word[i:i+2]
-#             if pair in pairs:
-#                 pairs[pair] += count
-#             else:
-#                 pairs[pair] = count
-#     max_count = max(pairs.values(), default=0)
-#     max_pairs = [pair for pair, count in pairs.items() if count == max_count]
-#     chosen_pair = max(max_pairs)
-#     return chosen_pair
 
 def initialize_pair_counts(token_state: dict[tuple[bytes, ...], int]) -> dict[tuple[bytes, ...], int]:
     pairs: dict[tuple[bytes, ...], int] = {}
